@@ -11,17 +11,14 @@
   <meta name="theme-color" content="#0f172a" />
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" as="style" onload="this.rel='stylesheet'">
   <style>
-    :root{
-      --bg: #0b1020;            /* fond */
-      --panel: #11162a;         /* cartes */
-      --accent: #8b5cf6;        /* violet */
-      --accent-2: #06b6d4;      /* cyan */
-      --text: #e5e7eb;          /* texte principal */
-      --muted: #9ca3af;         /* gris */
-      --ring: rgba(139,92,246,.35);
-      --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
+:root {
+  --bg: #f5faff;        /* bleu très clair, comme du papier */
+  --panel: #e6f0f8;     /* bleu pâle pour les cartes */
+  --accent: #e63946;    /* rouge corail vif (énergie) */
+  --accent-2: #0077b6;  /* bleu profond (structure) */
+  --text: #1c1c1c;      /* gris très sombre, presque noir */
+  --muted: #495057;     /* gris bleuté pour le texte secondaire */
+}
     *{box-sizing:border-box}
     html,body{height:100%}
     body{

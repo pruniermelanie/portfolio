@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Mélanie Prunier</title>
+  <meta name="description" content="Portfolio de Mélanie Prunier — Illustration & édition, communication, théâtre, storyboard, animation." />
+  <meta property="og:title" content="Portfolio — Mélanie Prunier" />
+  <meta property="og:description" content="Illustration & édition • Communication • Théâtre • Storyboard • Animation" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f5f4ee" />  <!-- Ajout d'une police élégante inspirée de l'esthétique japonaise -->  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&display=swap" as="style" onload="this.rel='stylesheet'">  <style>
+    /* THÈME CLAIR inspiré des estampes : papier clair, bleus profonds, rouge vermillon */
+    :root{
+      --bg: #fafcfe;          /* papier bleuté très clair */
+      --panel: #edf3f9;       /* cartes bleu pâle */
+      --panel-2: #ffffff;     /* blanc pur pour formulaires */
+      --accent: #e73b2f;      /* rouge vermillon énergique */
+      --accent-2: #0b6aa9;    /* bleu profond */
+      --ink: #092133;         /* bleu encre pour titres */
+      --text: #111418;        /* texte principal */
+      --muted: #546474;       /* texte secondaire (gris bleuté) */
+      --ring: color-mix(in oklab, var(--accent) 32%, transparent);
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(9,33,51,.08);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; 
+      font-family: 'Noto Serif JP', serif;
+      background:
+        radial-gradient(1000px 520px at 85% -10%, rgba(11,106,169,.10), transparent 60%),
+        radial-gradient(900px 520px at -10% 15%, rgba(231,59,47,.10), transparent 55%),
+        var(--bg);
+      color:var(--text); line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    img, video{max-width:100%; display:block}
+
+    /* Layout */
+    .container{width:min(1150px,

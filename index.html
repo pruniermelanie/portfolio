@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Mélanie Prunier</title>
+  <meta name="theme-color" content="#ffffff" />
+  <style>
+    :root{
+      --bg:#fff;
+      --ink:#0a1f44;   /* bleu marine */
+      --brand:#0077ff; /* bleu électrique */
+      --gap:24px;
+      --container:1320px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Microsoft Yi Baiti",sans-serif; /* Yi Baiti partout */
+      color:var(--ink);
+      background:var(--bg);
+    }
+    img{max-width:100%;display:block}
+
+    /* Voile blanc semi-transparent au hover */
+.frame {
+  position: relative;
+  aspect-ratio: 2/3;
+  background:#f2f2f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.frame img.img-main {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.frame::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.4);
+  opacity:0;
+  transition:opacity .3s ease;
+}
+
+.tile:hover .frame::after {
+  opacity:1;
+}
+/* Plein écran propre sur mobile */
+img:fullscreen{
+  width:100vw; height:100vh; object-fit:contain; background:#000;
+}
+
+
+    /* Layout sobre, marge gauche confortable */
+    .shell{display:grid; grid-template-columns:260px 1fr; column-gap:32px; min-height:100dvh;}
+    aside{
+      position:sticky; top:0; height:100dvh;
+      display:flex; flex-direction:column; gap:28px;
+      padding:32px 24px 28px 28px;
+    }
+
+    /* Marque */
+    .brand .name{
+      font-size:48px; line-height:30px; letter-spacing:.02em;
+      color:var(--brand); text-transform:uppercase;
+    }
+    .brand .name span{display:block}
+
+    /* ===== MENU (Yi Baiti 36/48, REGULAR, pas d’uppercase forcé) ===== */
+    .nav{display:flex; flex-direction:column; gap:8px}
+    .nav button{
+      appearance:none; background:none; border:none; padding:0; text-align:left; cursor:pointer;
+      font-family:"Microsoft Yi Baiti",sans-serif;
+      font-size:36px; line-height:48px; font-weight:400;
+      color:var(--ink);
+      text-transform:none; /* capitale initiale selon le texte */
+      letter-spacing:.01em;
+    }
+    .nav button[aria-pressed="true"]{text-decoration:underline}
+    .nav button:hover{color:var(--brand)}
+
+    main{padding:32px 32px 40px 0}
+    .container{max-width:var(--container); margin:0 auto; width:100%}
+
+    /* Grille — 4 colonnes, boutons images, SANS cadre */
+    .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap)}
+    .tile{position:relative; overflow:hidden; background:#fff; border:none}
+    .frame{aspect-ratio:2/3; background:#f2f2f2; position:relative}
+    .img-main,.img-preview{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .18s ease;
+    }
+    .img-main{opacity:1}
+    .img-preview{opacity:0}
+    /* Hover : on remplace l'image par la version -hover.jpg */
+    .tile:hover .img-main{opacity:0}
+    .tile:hover .img-preview{opacity:1}
+
+    /* Focus discret */
+    .tile:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+    /* ===== MODALE PROJET ===== */
+    dialog#project{
+      width:min(980px,94vw); border:1px solid #e5e5e5; border-radius:8px;
+      padding:0; background:#fff;
+    }
+    dialog#project::backdrop{background:rgba(0,0,0,.45)}
+    .modal-head{
+      padding:22px; border-bottom:1px solid #eee; text-align:center;
+    }
+    .modal-title,
+    .modal-desc,
+    .modal-body{ font-family:"Microsoft Yi Baiti",sans-serif; font-weight:400; }
+    .modal-title{
+      margin:0; color:var(--brand);
+      text-transform:uppercase; letter-spacing:.02em;
+      font-size:32px; line-height:36px; /* Regular, pas gras */
+    }
+    .modal-desc {
+  margin:10px 0 0 0;
+  color:var(--ink);
+  font-size:20px;
+  line-height:28px;
+  white-space:pre-line;
+  text-align:left;   /* ← aligne le texte à gauche */
+}
+
+    .modal-body{
+  padding:16px 16px 22px; max-height:72vh; overflow:auto;
+}
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(var(--cols,1), 1fr); /* défaut: 1 colonne */
+  gap:16px;
+}
+.gallery img{width:100%; height:auto; object-fit:cover}
+
+/* Mobile : 1 colonne */
+@media (max-width: 860px){
+  .modal-close{
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
+
+
+    .modal-close{
+      position:absolute; top:10px; right:10px;
+      width:40px; height:40px; border:none; border-radius:999px; cursor:pointer;
+      background:rgba(0,0,0,.65); color:#fff; font-size:18px;
+    }
+    .modal-close:focus-visible{outline:2px solid var(--brand)}
+
+    /* Responsive */
+    @media (max-width:1100px){
+      .shell{grid-template-columns:220px 1fr}
+      .container{max-width:980px}
+      .grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:860px){
+      .shell{grid-template-columns:1fr}
+      aside{position:relative; height:auto; flex-direction:row; flex-wrap:wrap; gap:16px}
+      .nav{flex-direction:row; flex-wrap:wrap; gap:16px}
+      main{padding:24px}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .nav button{font-size:28px; line-height:38px}
+      /* sur mobile, la modale force 1 colonne pour la lisibilité */
+      .modal-body{ grid-template-columns:1fr; }
+    }
+    @media (max-width:520px){
+      .grid{grid-template-columns:1fr}
+      .nav button{font-size:24px; line-height:32px}
+      .modal-title{font-size:26px; line-height:28px}
+      .modal-desc{font-size:18px; line-height:24px}
+    }
+    /* Plein écran propre pour les images ouvertes */
+img:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  background: #000;
+
+}/* Plein écran cross‑browser */
+img:fullscreen,
+img:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Effet hover (swap + voile) seulement si le device a un vrai hover */
+@media (hover: hover) {
+  .tile:hover .img-main { opacity: 0; }
+  .tile:hover .img-preview { opacity: 1; }
+  .tile:hover .frame::after { opacity: 1; }
+}
+
+/* Sur mobile (pas de hover), on cache la preview pour éviter des comportements étranges */
+@media (hover: none) {
+  .img-preview { display: none; }
+}
+/* Quand une <dialog> est ouverte, on bloque le scroll body */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+/* ==== Bio&CV : même style que la modale projet ==== */
+dialog#bio-cv{
+  width:min(680px,94vw);
+  border:1px solid #e5e5e5;
+  border-radius:8px;
+  padding:0;
+  background:#fff;
+}
+dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
+#bio-cv .modal-head{
+  padding:22px; border-bottom:1px solid #eee; text-align:center;
+}
+#bio-cv .modal-title{
+  margin:0; color:var(--brand);
+  text-transform:uppercase; letter-spacing:.02em;
+  font-size:32px; line-height:36px; font-weight:400;
+}
+#bio-cv .modal-body{
+  padding:16px 16px 22px; max-height:72vh; overflow:auto;
+}
+#bio-cv p{
+  font-size:18px; line-height:1.5; margin:0 0 12px 0; text-decoration:none;
+}
+
+/* bouton fermer dans Bio&CV (identique) */
+#bio-cv .modal-close{
+  position:absolute; top:10px; right:10px;
+  width:40px; height:40px; border:none; border-radius:999px; cursor:pointer;
+  background:rgba(0,0,0,.65); color:#fff; font-size:18px;
+}
+@media (max-width: 860px){
+  #bio-cv .modal-close{ width:48px; height:48px; font-size:20px; }
+}
+
+/* liens dans Bio&CV : pas soulignés par défaut, sauf le bouton CV */
+#bio-cv a{ color:inherit; text-decoration:none; }
+#bio-cv .cv-link{
+  font-weight:700; color:var(--brand); text-decoration:underline;
+  display:inline-block; margin-top:12px; font-size:20px;
+}
+#bio-cv .bio-photo {
+  display:block;
+  width:140px;       /* taille petite */
+  height:140px;
+  object-fit:cover;
+  border-radius:50%; /* rond */
+  margin:0 auto 20px auto; /* centré + espace dessous */
+}
+.cv-links {
+  display: flex;
+  justify-content: space-between; /* espace égal entre les 3 */
+  margin-top: 20px;
+}
+
+.cv-links .cv-link {
+  flex: 1; /* occupe de l’espace équitablement */
+  text-align: center;
+  font-weight: bold;
+  color: var(--brand);
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand">
+        <div class="name"><span>MÉLANIE</span><span>PRUNIER</span></div>
+      </div>
+
+      <div class="nav" role="group" aria-label="Catégories">
+        <button data-filter="all" aria-pressed="true">Tout</button>
+        <button data-filter="illustration">Illustration & édition</button>
+        <button data-filter="communication">Communication</button>
+        <button data-filter="theatre">Théâtre</button>
+        <button data-filter="storyboard">Storyboard</button>
+        <button data-filter="animation">Animation</button>
+        <button data-filter="Bio&CV">Bio&CV</button>
+      </div>
+
+      <div style="margin-top:auto; color:#666; font-size:20px">
+        contact : <a href="mailto:prunier.melanie@gmail.com">prunier.melanie@gmail.com</a>
+      </div>
+    </aside>
+
+    <main>
+      <div class="container">
+        <section class="grid" id="projects">
+          <!-- Illustration -->
+<a href="#" class="tile" data-category="illustration"
+   data-title="LES DÉMONIALES DE PORT-ROYAL"
+   data-description="2025, projet de bande dessinée en linogravure sur la rébellion des nonnes de Port-Royal face aux pouvoirs royal et religieux au XVIIè siècle."
+   data-images="./assets/projet-1-detail1.jpg,./assets/projet-1-detail2.jpg,./assets/projet-1-detail3.jpg,./assets/projet-1-detail4.jpg,./assets/projet-1-detail5.jpg">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-1.jpg"        alt="Projet 1">
+    <img class="img-preview" src="./assets/projet-1-hover.jpg"  alt="">
+  </div>
+</a>
+
+<a href="#" class="tile" data-category="illustration"
+   data-title="2ème adaptation BD de La Princesse aux Orties"
+   data-description="2024-2025, recherche de planches avec une direction artistique tournée vers la sérigraphie, inspirée des estampes de La Princesse aux Orties. 
+   2 planches clean et 6 planches storyboardées."
+   data-images="./assets/projet-2-detail1.jpg,./assets/projet-2-detail2.jpg,./assets/projet-2-detail3.jpg,./assets/projet-2-detail4.jpg,./assets/projet-2-detail5.jpg,./assets/projet-2-detail6.jpg,./assets/projet-2-detail7.jpg,./assets/projet-2-detail8.jpg,./assets/projet-2-detail9.jpg,./assets/projet-2-detail10.jpg,./assets/projet-2-detail11.jpg,./assets/projet-2-detail12.jpg"
+   data-cols="2">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-2.jpg"        alt="Projet 2">
+    <img class="img-preview" src="./assets/projet-2-hover.jpg"  alt="">
+  </div>
+</a>
+
+<a href="#" class="tile" data-category="illustration"
+   data-title="1ère adaptation BD de La Princesse aux Orties"
+   data-description="2024, recherche de planches avec une direction artistique crayons de couleurs."
+   data-images="./assets/projet-3-detail1.jpg,./assets/projet-3-detail2.jpg,./assets/projet-3-detail3.jpg,./assets/projet-3-detail4.jpg,./assets/projet-3-detail5.jpg,./assets/projet-3-detail6.jpg,./assets/projet-3-detail7.jpg,./assets/projet-3-detail8.jpg,./assets/projet-3-detail9.jpg,./assets/projet-3-detail10.jpg,./assets/projet-3-detail11.jpg,./assets/projet-3-detail12.jpg,./assets/projet-3-detail13.jpg,./assets/projet-3-detail14.jpg,./assets/projet-3-detail15.jpg,./assets/projet-3-detail16.jpg,./assets/projet-3-detail17.jpg,./assets/projet-3-detail18.jpg,./assets/projet-3-detail19.jpg,./assets/projet-3-detail20.jpg">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-3.jpg"        alt="Projet 3">
+    <img class="img-preview" src="./assets/projet-3-hover.jpg"  alt="">
+  </div>
+</a>
+
+<a href="#" class="tile" data-category="illustration"
+   data-title="Õ"
+   data-description="2024–2025, œuvre collective de 5 artistes autour du thème de l’eau, avec édition d’un leporello artisanal et 4 estampes. 
+   Édition PoiPlum."
+   data-images="./assets/projet-4-detail1.jpg,./assets/projet-4-detail2.jpg"
+   data-cols="2">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-4.jpg"        alt="Projet 4">
+    <img class="img-preview" src="./assets/projet-4-hover.jpg"  alt="">
+  </div>
+</a>
+
+<a href="#" class="tile" data-category="illustration"
+   data-title="YOKAÏ-VOLCANS"
+   data-description="2024, 4 sérigraphies réalisées à l'Atelier des Mains Sales. Édition PoiPlum."
+   data-images="./assets/projet-5-detail1.jpg,./assets/projet-5-detail2.jpg,./assets/projet-5-detail3.jpg,./assets/projet-5-detail4.jpg,./assets/projet-5-detail5.jpg,./assets/projet-5-detail6.jpg"
+   data-cols="2">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-5.jpg"        alt="Projet 5">
+    <img class="img-preview" src="./assets/projet-5-hover.jpg"  alt="">
+  </div>
+  </a>
+        <!-- Communication -->
+         <a href="#" class="tile" data-category="communication"
+             data-title="Affiche pour le festival Au fil du Conte"
+             data-description="2024, affiche pour le festival Au fil du Conte dans toutes les médiathèques de la Charente. 
+             Visuel issu de la série d'estampes La Princesse aux Orties."
+             data-images="./assets/projet-6-detail1.jpg,./assets/projet-6-detail2.jpg">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-6.jpg"        alt="Projet 6">
+              <img class="img-preview" src="./assets/projet-6-hover.jpg"  alt="">
+            </div>
+          </a>
+  <!-- Illustration -->
+<a href="#" class="tile" data-category="illustration"
+             data-title="Coffret-livre La Princesse aux Orties"
+             data-description="2010-2023, un conte initiatique de +40000 mots au coeur de la Bretagne médiévale, écrit et illustré par Mélanie Prunier."
+             data-images="./assets/projet-7-detail1.jpg,./assets/projet-7-detail2.jpg,./assets/projet-7-detail3.jpg,./assets/projet-7-detail4.jpg"
+             data-cols="2">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-7.jpg"        alt="Projet 7">
+              <img class="img-preview" src="./assets/projet-7-hover.jpg"  alt="">
+            </div>
+          </a>
+
+          <!-- Illustration -->
+     <a href="#" class="tile" data-category="illustration"
+   data-title="Estampes La Princesse aux Orties"
+   data-description="2020-2023, 13 estampes polychromes 40x50 en linogravure et xylogravure, imprimées à la cuillère en bois avec des encres à l'huile sur du Similijapon. 
+   Estampes numérotées en vente dans les galeries Fichtre-Diantre et Art-Images Angoulême. 
+   Exposition-vente en galeries et salons (FIBD, Quai des Bulles, MIFAC, Journées du Patrimoine, One-Shot-Event, Magelis en fête)."
+   data-images="./assets/projet-8-detail1.jpg,./assets/projet-8-detail2.jpg,./assets/projet-8-detail3.jpg,./assets/projet-8-detail4.jpg,./assets/projet-8-detail5.jpg,./assets/projet-8-detail6.jpg,./assets/projet-8-detail7.jpg,./assets/projet-8-detail8.jpg,./assets/projet-8-detail9.jpg,./assets/projet-8-detail10.jpg,./assets/projet-8-detail11.jpg,./assets/projet-8-detail12.jpg,./assets/projet-8-detail13.jpg,./assets/projet-8-detail14.jpg,./assets/projet-8-detail15.jpg,./assets/projet-8-detail16.jpg,./assets/projet-8-detail17.jpg"
+   data-cols="2"
+   data-video="./assets/projet-8-video.mp4">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-8.jpg"        alt="Projet 8">
+    <img class="img-preview" src="./assets/projet-8-hover.jpg"  alt="">
+  </div>
+</a>
+
+        
+          <a href="#" class="tile" data-category="illustration"
+             data-title="Le Femtomètre"
+             data-description="2022, illustration pour le livre Cosmos-graphie, édité par le collectif PAON."
+             data-images="./assets/projet-9-detail1.jpg">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-9.jpg"        alt="Projet 9">
+              <img class="img-preview" src="./assets/projet-9-hover.jpg"  alt="">
+            </div>
+          </a>
+
+            <!-- Théâtre -->
+          <a href="#" class="tile" data-category="theatre"
+             data-title="Emile&Angèle"
+             data-description="2021, illustration, communication et habillage vidéo pour le spectacle de théâtre Emile&Angèle, écrit par  Joël da Silva et Françoise Pillet, mis en scène par la Compagnie T'Atrium."
+             data-images="./assets/projet-10-detail1.jpg,./assets/projet-10-detail2.jpg"
+             data-cols="2">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-10.jpg"       alt="Projet 10">
+              <img class="img-preview" src="./assets/projet-10-hover.jpg" alt="">
+            </div>
+          </a>
+          <!-- Storyboard -->
+           <a href="#" class="tile" data-category="storyboard"
+             data-title="YNOV CAMPUS"
+             data-description="Depuis 2021, je suis enseignante en écriture, storyboard et mise en scène à Ynov Campus Bordeaux, école supérieure d'informatique, de jeux vidéo et d'animation 3D. 
+             J'initie les Bachelors 1 à l'art de la mise en scène grâce à un workshop basé sur le bagage intuitif de l'élève, sa structuration technique et l'analyse de nombreux extraits de l'histoire du cinéma. 
+             J'accompagne également les Bachelors 2&3 ainsi que les Mastères 1&2 dans leurs projets d'animation 2D/3D, aussi bien en écriture qu'en mise en scène."
+            >
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-19.jpg"       alt="Projet 19">
+              <img class="img-preview" src="./assets/projet-19-hover.jpg" alt="">
+            </div>
+          </a>
+          <a href="#" class="tile" data-category="storyboard"
+             data-title="ZOUK"
+             data-description="2019-2020, 8 animatiques storyboardées pour la série Zouk, saison 1, diffusée sur Canal+ et réalisée par Jonathan Mesner à Normaal Studio."
+             data-video="./assets/projet-11-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-11.jpg"       alt="Projet 11">
+              <img class="img-preview" src="./assets/projet-11-hover.jpg" alt="">
+            </div>
+          </a>
+          <a href="#" class="tile" data-category="storyboard"
+             data-title="BARBAPAPA"
+             data-description="2017-2019, 11 animatiques storyboardées pour la série Barbapapa en famille, saison 1, diffusée sur TF1 et réalisée par Alice Taylor & Thomas Taylor à Normaal Studio."
+             data-video="./assets/projet-12-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-12.jpg"       alt="Projet 12">
+              <img class="img-preview" src="./assets/projet-12-hover.jpg" alt="">
+            </div>
+          </a>
+
+          <!-- Communication -->
+          <a href="#" class="tile" data-category="communication"
+             data-title="Partenariat artistique avec la salle de concert La Nef"
+             data-description="Depuis 2017, croquis en live, fresque murale, sérigraphie et illustrations pour la communication papier et web."
+             data-images="./assets/projet-14-detail1.jpg,./assets/projet-14-detail2.jpg,./assets/projet-14-detail3.jpg,./assets/projet-14-detail4.jpg,./assets/projet-14-detail5.jpg,./assets/projet-14-detail6.jpg,./assets/projet-14-detail7.jpg,./assets/projet-14-detail8.jpg,./assets/projet-14-detail9.jpg,./assets/projet-14-detail10.jpg,./assets/projet-14-detail11.jpg,./assets/projet-14-detail12.jpg,./assets/projet-14-detail13.jpg,./assets/projet-14-detail14.jpg,./assets/projet-14-detail15.jpg,./assets/projet-14-detail16.jpg"
+             data-cols="2">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-14.jpg"       alt="Projet 14">
+              <img class="img-preview" src="./assets/projet-14-hover.jpg" alt="">
+            </div>
+          </a>
+
+        <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Ella, Oscar et Hoo"
+             data-description="2016-2017, animatrice 3D Blender pour la série Ella, Oscar et Hoo, saison 1, diffusée sur Canal+ et réalisée par Emmanuel Linderer à Normaal Studio."
+             data-images="">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-13.jpg"       alt="Projet 13">
+              <img class="img-preview" src="./assets/projet-13-hover.jpg" alt="">
+            </div>
+          </a>
+
+          
+
+          <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Les Grandes Grandes Vacances"
+             data-description="2014-2015, animatrice 3DS Max pour la série Les Grandes Grandes Vacances, diffusée sur France 3 et réalisée par Paul Leluc, Productions Les Armateurs et Blue Spirit."
+             data-video="./assets/projet-15-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-15.jpg"       alt="Projet 15">
+              <img class="img-preview" src="./assets/projet-15-hover.jpg" alt="">
+            </div>
+          </a>
+          <a href="#" class="tile" data-category="animation"
+             data-title="Les Mystérieuses Cités d'Or 2&3"
+             data-description="2011-2013, puis 2015-2016, animatrice 3DS Max pour les saisons 2 & 3 des Mystérieuses Cités d'Or, diffusées sur TF1 et réalisées par Jean-Luc François, Productions Blue Spirit."
+             data-video="./assets/projet-16-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-16.jpg"       alt="Projet 16">
+              <img class="img-preview" src="./assets/projet-16-hover.jpg" alt="">
+            </div>
+          </a>
+
+          <!-- Théâtre -->
+          <a href="#" class="tile" data-category="theatre"
+             data-title="Îlot"
+             data-description="2013-24, réalisation et animation de scénettes animées pour la pièce de théâtre Ilôt, mise en scène Sandrine Nicolas, Compagnie Le rideau à sonnette."
+             data-images="./assets/projet-17-detail1.jpg,./assets/projet-17-detail2.jpg,./assets/projet-17-detail3.jpg"
+              data-video="./assets/projet-17-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-17.jpg"       alt="Projet 17">
+              <img class="img-preview" src="./assets/projet-17-hover.jpg" alt="">
+            </div>
+          </a>
+          <!-- Illustration -->
+          <a href="#" class="tile" data-category="illustration"
+             data-title="Sortir 16"
+             data-description="2013-2014, 2 couvertures pour le magazine Sortir 16."
+             data-images="./assets/projet-18-detail1.jpg,./assets/projet-18-detail2.jpg"
+             data-cols="2">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-18.jpg"       alt="Projet 18">
+              <img class="img-preview" src="./assets/projet-18-hover.jpg" alt="">
+            </div>
+             </a>
+          <!-- Communication -->
+          <a href="#" class="tile" data-category="communication"
+             data-title="Festival Tout-Petit(s) Cinema"
+             data-description="2007-2008, réalisation et fabrication, bande-son comprise, d'un générique animé pour le festival Tout-petit(s) Cinema 2008 au Forum des Images à Paris.
+            Ce générique a été diffusé avant chaque séance du festival."
+            data-video="./assets/projet-20-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-20.jpg"        alt="Projet 20">
+              <img class="img-preview" src="./assets/projet-20-hover.jpg"  alt="">
+            </div>
+            </a>
+          <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Peur(s) du noir"
+             data-description="2006, animatrice 2D Flash pour le court-métrage de Richard Mc Guire au sein du film Peur(s) du Noir, Productions Prima Linéa. J'ai notamment animé toutes les séquences d'oiseaux" 
+              data-images="./assets/projet-21-detail1.jpg,./assets/projet-21-detail2.jpg"
+              data-cols="2">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-21.jpg"        alt="Projet 21">
+              <img class="img-preview" src="./assets/projet-21-hover.jpg"  alt="">
+            </div>
+            </a>
+          <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Kuri"
+             data-description="Petit conte du printemps sur un air de flûte peule.
+              Film de fin d'étude de l'EMCI co-réalisé avec Alice Bohl en 2007.
+              J'ai réalisé le storyboard, le character design, le compositing et l'animation 2D.
+              Félicitations du jury Anifest 2008, Prix Coup de cœur du Forum des Images, prix CCI de la Charente, sélection dans de nombreux festivals."
+             data-video="./assets/projet-22-video.mp4">          
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-22.jpg"        alt="Projet 22">
+              <img class="img-preview" src="./assets/projet-22-hover.jpg"  alt="">
+            </div>  
+            </a>
+          <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Pépins de melon"
+             data-description="Le collectionneur, heureux dans l'abîme, parsemait son esprit de choses inutiles.
+            Film de fin d'étude de l'Emca, 2006.
+            Best Animation Price au festival Izolanima 2006, sélection dans de nombreux festivals."
+             data-video="./assets/projet-23-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-23.jpg"        alt="Projet 23">
+              <img class="img-preview" src="./assets/projet-23-hover.jpg"  alt="">
+            </div>
+             </a>
+          <!-- Animation -->
+          <a href="#" class="tile" data-category="animation"
+             data-title="Comptine"
+              data-description="Petite comptine décapitante d'une élève de CP un peu différente.
+              Film de 1ère année de l'Emca, 2005
+              Sélection officielle festival du film d'animation français d'Auch, 2006."
+              data-video="./assets/projet-24-video.mp4">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-24.jpg">
+              <img class="img-preview" src="./assets/projet-24-hover.jpg"  alt="">
+            </div>
+             </a>
+
+        </section>
+      </div>
+    </main>
+  </div>
+  </a>
+
+  <!-- ===== MODALE one-page ===== -->
+<dialog id="project" aria-label="Détails du projet">
+  <button class="modal-close" aria-label="Fermer">✕</button>
+  <div class="modal-head">
+    <h2 class="modal-title">Titre projet</h2>
+    <p class="modal-desc">Courte description…</p>
+  </div>
+  <div class="modal-body">
+    <div class="gallery" id="gallery"></div>
+  </div>
+</dialog>
+
+<!-- Modale Bio&CV -->
+<dialog id="bio-cv" aria-label="Bio et CV">
+  <button class="modal-close" aria-label="Fermer">✕</button>
+  <div class="modal-head">
+    <h2 class="modal-title">Bio & CV</h2>
+  </div>
+  <div class="modal-body">
+    <!-- 👇 Nouvelle photo -->
+    <img class="bio-photo" src="./assets/photo-bio.jpg" alt="Portrait de Mélanie Prunier">
+    <p style="font-size:18px;line-height:1.5">
+      Illustratrice, graveuse, storyboardeuse, animatrice 2D/3D, éditrice, écrivaine et enseignante, Mélanie Prunier explore l’image narrative sous toutes ses formes : animation, bande dessinée, estampes, communication visuelle et théâtre.<br>
+      Son univers mêle poésie, engagement et expérimentation graphique.<br>
+      Etudes de graphisme à l'ENSAAMA Olivier de Serres (Paris), et d’animation 2D/3D à l’EMCA (Angoulême).<br>
+    </p>
+   <div class="cv-links">
+  <a class="cv-link" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
+  <a class="cv-link" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
+  <a class="cv-link" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
+  </p>
+</div>
+
+
+</dialog>
+
+<script>
+  // utilitaires
+  const $ = (s, e = document) => e.querySelector(s);
+  const $$ = (s, e = document) => [...e.querySelectorAll(s)];
+
+ // Filtres menu (+ ignore Bio&CV qui ouvre sa propre modale)
+const tiles = $$('#projects .tile');
+const bioBtn = $('.nav button[data-filter="Bio&CV"]');
+
+$$('.nav button').forEach(btn=>{
+  btn.addEventListener('click',(ev)=>{
+    // si c'est le bouton Bio&CV, on ne filtre pas ici (la modale s'ouvre ailleurs)
+    if (bioBtn && btn === bioBtn) return;
+
+    $$('.nav button').forEach(b=>b.setAttribute('aria-pressed','false'));
+    btn.setAttribute('aria-pressed','true');
+
+    const f = (btn.dataset.filter || 'all').toLowerCase();
+    tiles.forEach(t=>{
+      t.style.display = (f==='all' || t.dataset.category===f) ? '' : 'none';
+    });
+  });
+});
+
+
+  // Cache silencieusement l'image de hover si elle n'existe pas
+  $$('.img-preview').forEach(pre => {
+    pre.addEventListener('error', () => { pre.style.display = 'none'; });
+  });
+
+  // ===== MODALE : titre + description centrés + galerie =====
+  const dialog = $('#project');
+  const g      = $('#gallery');
+  const titleEl= $('.modal-title');
+  const descEl = $('.modal-desc');
+  const bodyEl = $('.modal-body');
+
+  // Fonction utilitaire pour ajouter une image à la galerie
+  function addImg(src) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cursor = 'zoom-in';
+
+    // Clic = plein écran (avec fallback iOS / nouvel onglet)
+    img.addEventListener('click', () => {
+      const el = img;
+      const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+      if (canFS) {
+        if (el.requestFullscreen) {
+          el.requestFullscreen();
+        } else if (el.webkitRequestFullscreen) {
+          el.webkitRequestFullscreen();
+        } else {
+          window.open(el.src, '_blank');
+        }
+      } else {
+        window.open(el.src, '_blank');
+      }
+    });
+
+    g.appendChild(img);
+  }
+
+  tiles.forEach(tile => {
+    tile.addEventListener('click', e => {
+      e.preventDefault();
+
+      // Contenu
+      const title = tile.dataset.title || '';
+      const desc  = tile.dataset.description || '';
+      const list  = (tile.dataset.images || '').split(',').map(s => s.trim()).filter(Boolean);
+      const video = tile.dataset.video;
+
+      // Titre + description
+      titleEl.textContent = title;
+      descEl.textContent  = desc;
+
+      // Colonnes (par projet) : data-cols="2" -> 2 colonnes, sinon 1
+      const cols = parseInt(tile.dataset.cols || '1', 10);
+      g.style.setProperty('--cols', isNaN(cols) ? 1 : cols);
+
+      // Galerie
+      g.innerHTML = '';
+
+      // 1) Ajouter toutes les images
+      if (list.length) {
+        list.forEach(src => addImg(src));
+      }
+
+      // 2) Puis ajouter UNE SEULE vidéo (si présente)
+      if (video) {
+        const vid = document.createElement('video');
+        vid.src = video;
+        vid.controls = true;
+        vid.playsInline = true;
+        vid.style.width = '100%';
+        vid.style.marginTop = '24px';
+        vid.style.gridColumn = `span ${cols}`; // occupe toute la largeur
+        g.appendChild(vid);
+      }
+
+      // 3) Ouvrir la modale
+      dialog.showModal();
+    });
+  });
+
+  $('.modal-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && dialog.open) dialog.close(); });
+
+
+// Script pour la modale Bio&CV (ouvre la modale, sans filtrer la grille)
+const bioBtn2 = $('.nav button[data-filter="Bio&CV"]');
+const bioDialog = document.getElementById('bio-cv');
+
+if (bioBtn2 && bioDialog) {
+  bioBtn2.addEventListener('click', (e) => {
+    e.preventDefault();
+    // ne touche pas aux aria-pressed ici, c’est juste une modale indépendante
+    bioDialog.showModal();
+  });
+  bioDialog.querySelector('.modal-close').addEventListener('click', () => bioDialog.close());
+  bioDialog.addEventListener('click', e => { if (e.target === bioDialog) bioDialog.close(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && bioDialog.open) bioDialog.close(); });
+}
+
+
+</script>
+</body>
+</html>

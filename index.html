@@ -649,81 +649,76 @@ $$('.nav button').forEach(btn=>{
     pre.addEventListener('error', () => { pre.style.display = 'none'; });
   });
 
-  // ===== MODALE : titre + description centrés + galerie =====
-  const dialog = $('#project');
-  const g      = $('#gallery');
-  const titleEl= $('.modal-title');
-  const descEl = $('.modal-desc');
-  const bodyEl = $('.modal-body');
+// ===== MODALE : titre + description + galerie (version déléguée, gère 24+ projets) =====
+const dialog  = $('#project');
+const g       = $('#gallery');
+const titleEl = $('.modal-title');
+const descEl  = $('.modal-desc');
 
-  // Fonction utilitaire pour ajouter une image à la galerie
-  function addImg(src) {
+// Un seul écouteur sur le conteneur : fonctionne pour tous les .tile existants ou futurs
+$('#projects').addEventListener('click', (e) => {
+  const tile = e.target.closest('.tile');
+  if (!tile) return;           // clic en dehors d'une vignette
+  e.preventDefault();
+
+  // Récupère les données du projet
+  const title = tile.dataset.title || '';
+  const desc  = tile.dataset.description || '';
+  const list  = (tile.dataset.images || '').split(',').map(s => s.trim()).filter(Boolean);
+  const video = tile.dataset.video;
+
+  // Alimente l'entête de la modale
+  titleEl.textContent = title;
+  descEl.textContent  = desc;
+
+  // Colonnes personnalisées par projet (ex: data-cols="2"), défaut = 1
+  const cols = parseInt(tile.dataset.cols || '1', 10);
+  g.style.setProperty('--cols', isNaN(cols) ? 1 : cols);
+
+  // Construit la galerie
+  g.innerHTML = '';
+
+  // Ajoute une image + gestion plein écran (avec fallback)
+  const addImg = (src) => {
     const img = document.createElement('img');
     img.src = src;
     img.style.cursor = 'zoom-in';
-
-    // Clic = plein écran (avec fallback iOS / nouvel onglet)
     img.addEventListener('click', () => {
       const el = img;
       const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
       if (canFS) {
-        if (el.requestFullscreen) {
-          el.requestFullscreen();
-        } else if (el.webkitRequestFullscreen) {
-          el.webkitRequestFullscreen();
-        } else {
-          window.open(el.src, '_blank');
-        }
+        (el.requestFullscreen?.() || el.webkitRequestFullscreen?.()) ?? window.open(el.src, '_blank');
       } else {
         window.open(el.src, '_blank');
       }
     });
-
     g.appendChild(img);
+  };
+
+  // Images (ou fallback sur l'image principale)
+  if (list.length) {
+    list.forEach(src => addImg(src));
+  } else {
+    const main = tile.querySelector('.img-main');
+    if (main) addImg(main.getAttribute('src'));
   }
 
-  tiles.forEach(tile => {
-    tile.addEventListener('click', e => {
-      e.preventDefault();
+  // Vidéo (UNE seule, à la fin, sur toute la largeur des colonnes)
+  if (video) {
+    const vid = document.createElement('video');
+    vid.src = video;
+    vid.controls = true;
+    vid.playsInline = true;
+    vid.style.width = '100%';
+    vid.style.marginTop = '24px';
+    vid.style.gridColumn = `span ${cols}`;
+    g.appendChild(vid);
+  }
 
-      // Contenu
-      const title = tile.dataset.title || '';
-      const desc  = tile.dataset.description || '';
-      const list  = (tile.dataset.images || '').split(',').map(s => s.trim()).filter(Boolean);
-      const video = tile.dataset.video;
+  // Ouvre la modale
+  dialog.showModal();
+});
 
-      // Titre + description
-      titleEl.textContent = title;
-      descEl.textContent  = desc;
-
-      // Colonnes (par projet) : data-cols="2" -> 2 colonnes, sinon 1
-      const cols = parseInt(tile.dataset.cols || '1', 10);
-      g.style.setProperty('--cols', isNaN(cols) ? 1 : cols);
-
-      // Galerie
-      g.innerHTML = '';
-
-      // 1) Ajouter toutes les images
-      if (list.length) {
-        list.forEach(src => addImg(src));
-      }
-
-      // 2) Puis ajouter UNE SEULE vidéo (si présente)
-      if (video) {
-        const vid = document.createElement('video');
-        vid.src = video;
-        vid.controls = true;
-        vid.playsInline = true;
-        vid.style.width = '100%';
-        vid.style.marginTop = '24px';
-        vid.style.gridColumn = `span ${cols}`; // occupe toute la largeur
-        g.appendChild(vid);
-      }
-
-      // 3) Ouvrir la modale
-      dialog.showModal();
-    });
-  });
 
   $('.modal-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });

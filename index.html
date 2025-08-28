@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio — Mélanie Prunier</title>
   <meta name="theme-color" content="#ffffff" />
+  <!-- Police de secours si Yi Baiti n'est pas dispo -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#fff;
@@ -17,11 +20,25 @@
     html,body{height:100%}
     body{
       margin:0;
-      font-family:"Microsoft Yi Baiti",sans-serif; /* Yi Baiti partout */
+      font-family:"Microsoft Yi Baiti","Raleway",sans-serif; /* Yi Baiti partout, sinon Raleway */
       color:var(--ink);
       background:var(--bg);
     }
     img{max-width:100%;display:block}
+
+    /* Même pile de fontes partout (menus + modales) */
+.nav button,
+.modal-title,
+.modal-desc,
+.modal-body {
+  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
+  font-weight: 400;            /* évite l'apparition de gras par défaut */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+
 
     /* Voile blanc semi-transparent au hover */
 .frame {

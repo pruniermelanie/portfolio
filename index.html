@@ -286,28 +286,30 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
   font-weight:700; color:var(--brand); text-decoration:underline;
   display:inline-block; margin-top:12px; font-size:20px;
 }
-#bio-cv .bio-photo {
-  display:block;
-  width:140px;       /* taille petite */
-  height:140px;
-  object-fit:cover;
-  border-radius:50%; /* rond */
-  margin:0 auto 20px auto; /* centré + espace dessous */
-}
-.cv-links {
-  display: flex;
-  justify-content: space-between; /* espace égal entre les 3 */
-  margin-top: 20px;
+.bio-photo {
+  display: block;
+  margin: 0 auto 16px; /* centre + espace en dessous */
+  width: 140px; 
+  height: 140px;
+  border-radius: 50%; /* ronde */
+  object-fit: cover;
 }
 
-.cv-links .cv-link {
-  flex: 1; /* occupe de l’espace équitablement */
-  text-align: center;
+.cv-links {
+  display: flex;
+  justify-content: space-between; /* écart régulier entre les 3 liens */
+  margin: 12px 0 20px;
+}
+
+.cv-link {
   font-weight: bold;
   color: var(--brand);
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: underline;
+  flex: 1;              /* chaque lien prend la même largeur */
+  text-align: center;   /* et le texte est centré */
 }
+
 <script>
   (function(){
     const canHover = window.matchMedia('(hover: hover)').matches &&
@@ -645,22 +647,25 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
     <h2 class="modal-title">Bio & CV</h2>
   </div>
   <div class="modal-body">
-    <!-- 👇 Nouvelle photo -->
+    <!-- 👇 Photo -->
     <img class="bio-photo" src="./assets/photo-bio.jpg" alt="Portrait de Mélanie Prunier">
+
+    <!-- 👇 Liens directement sous la photo -->
+    <div class="cv-links">
+      <a class="cv-link" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
+      <a class="cv-link" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
+      <a class="cv-link" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
+    </div>
+
+    <!-- 👇 Texte de bio en dessous -->
     <p style="font-size:18px;line-height:1.5">
-      Illustratrice, graveuse, storyboardeuse, animatrice 2D/3D, éditrice, écrivaine et enseignante, Mélanie Prunier explore l’image narrative sous toutes ses formes : animation, bande dessinée, estampes, communication visuelle et théâtre.<br>
+      Illustratrice, graveuse, storyboardeuse, animatrice 2D/3D, éditrice, écrivaine et enseignante, Mélanie Prunier explore l’image narrative sous toutes ses formes : animation, bande dessinée, estampes, communication visuelle et théâtre.<br>
       Son univers mêle poésie, engagement et expérimentation graphique.<br>
       Etudes de graphisme à l'ENSAAMA Olivier de Serres (Paris), et d’animation 2D/3D à l’EMCA (Angoulême).<br>
     </p>
-   <div class="cv-links">
-  <a class="cv-link" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
-  <a class="cv-link" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
-  <a class="cv-link" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
-  </p>
-</div>
-
-
+  </div>
 </dialog>
+
 
 <script>
   // utilitaires

@@ -137,12 +137,15 @@ img:fullscreen{
     }
     .img-main{opacity:1}
     .img-preview{opacity:0}
-    /* Hover : on remplace l'image par la version -hover.jpg */
-    .tile:hover .img-main{opacity:0}
-    .tile:hover .img-preview{opacity:1}
+    /* === GESTION DU HOVER SELON LE DEVICE === */
 
-    /* Focus discret */
-    .tile:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+/* Effet hover UNIQUEMENT si l’appareil sait vraiment hover */
+.hasHover .tile:hover .img-main{opacity:0}
+.hasHover .tile:hover .img-preview{opacity:1}
+.hasHover .tile:hover .frame::after{opacity:1}
+
+/* Sur appareils sans hover : on ne montre jamais la preview */
+.noHover .img-preview{display:none !important;}
 
     /* ===== MODALE PROJET ===== */
     dialog#project{
@@ -237,16 +240,7 @@ img:-webkit-full-screen {
   background: #000;
 }
 
-/* Effet hover (swap + voile) seulement si le device a un vrai hover */
-@media (hover: hover) {
-  .tile:hover .img-main { opacity: 0; }
-  .tile:hover .img-preview { opacity: 1; }
-  .tile:hover .frame::after { opacity: 1; }
-}
 
-/* Sur mobile (pas de hover), on cache la preview pour éviter des comportements étranges */
-@media (hover: none) {
-  .img-preview { display: none; }
 }
 /* Quand une <dialog> est ouverte, on bloque le scroll body */
 body:has(dialog[open]) {
@@ -314,6 +308,14 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
   font-size: 20px;
   text-decoration: underline;
 }
+<script>
+  (function(){
+    const canHover = window.matchMedia('(hover: hover)').matches &&
+                     window.matchMedia('(pointer: fine)').matches;
+    document.documentElement.classList.toggle('hasHover', canHover);
+    document.documentElement.classList.toggle('noHover', !canHover);
+  })();
+</script>
 
 
 
@@ -616,6 +618,7 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
               <img class="img-preview" src="./assets/projet-24-hover.jpg"  alt="">
             </div>
              </a>
+        
 
         </section>
       </div>

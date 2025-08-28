@@ -690,6 +690,23 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
   const $ = (s, e = document) => e.querySelector(s);
   const $$ = (s, e = document) => [...e.querySelectorAll(s)];
 
+   /* === Détection hover/noHover — À AJOUTER ICI === */
+  (function(){
+    // "desktop" typique : hover + pointeur fin (souris)
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    function apply(){
+      const canHover = mq.matches;
+      document.documentElement.classList.toggle('hasHover', canHover);
+      document.documentElement.classList.toggle('noHover', !canHover);
+    }
+    // initialise
+    apply();
+    // met à jour si l’OS change le mode pointeur (ex: tablette avec stylet/souris)
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply); // vieux Safari
+  })();
+  /* === fin détection === */
+
  // Filtres menu (+ ignore Bio&CV qui ouvre sa propre modale)
 const tiles = $$('#projects .tile');
 const bioBtn = $('.nav button[data-filter="Bio&CV"]');

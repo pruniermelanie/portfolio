@@ -104,14 +104,24 @@ img:fullscreen{
 
     /* ===== MENU (Yi Baiti 36/48, REGULAR, pas d’uppercase forcé) ===== */
     .nav{display:flex; flex-direction:column; gap:8px}
-    .nav button{
-      appearance:none; background:none; border:none; padding:0; text-align:left; cursor:pointer;
-      font-family:"Microsoft Yi Baiti",sans-serif;
-      font-size:36px; line-height:48px; font-weight:400;
-      color:var(--ink);
-      text-transform:none; /* capitale initiale selon le texte */
-      letter-spacing:.01em;
-    }
+.nav button{
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 400;                 /* garanti regular */
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: .01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
     .nav button[aria-pressed="true"]{text-decoration:underline}
     .nav button:hover{color:var(--brand)}
 
@@ -172,10 +182,12 @@ img:fullscreen{
 
 /* Mobile : 1 colonne */
 @media (max-width: 860px){
-  .modal-close{
-    width: 48px;
-    height: 48px;
-    font-size: 20px;
+  .brand .name{
+    font-size: 42px;
+    line-height: 36px;
+  }
+  .brand .name span:first-child{
+    margin-bottom: 12px;       /* un peu plus d'espace sur mobile */
   }
 }
 

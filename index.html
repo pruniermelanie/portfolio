@@ -297,10 +297,18 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
 
 .cv-links {
   display: flex;
-  justify-content: space-between; /* CV à gauche, LinkedIn au centre, Instagram à droite */
-  margin: 12px 0 20px;
-  width: 100%;
+  justify-content: space-between; /* mobile par défaut */
+  margin-top: 16px;
 }
+
+/* Sur écrans larges (ex. > 860px = PC), tout recentré */
+@media (min-width: 860px) {
+  .cv-links {
+    justify-content: center;   /* centre le bloc */
+    gap: 32px;                 /* espace régulier entre chaque lien */
+  }
+}
+
 
 .cv-link {
   font-weight: bold;
@@ -658,10 +666,11 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
 
     <!-- 👇 Liens : gauche / centre / droite -->
 <div class="cv-links">
-  <a class="cv-link left" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
-  <a class="cv-link center" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
-  <a class="cv-link right" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
+  <a class="cv-link" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
+  <a class="cv-link" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
+  <a class="cv-link" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
 </div>
+
 
     <!-- 👇 Texte de bio en dessous -->
     <p style="font-size:18px;line-height:1.5">

@@ -297,8 +297,9 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
 
 .cv-links {
   display: flex;
-  justify-content: space-between; /* écart régulier entre les 3 liens */
+  justify-content: space-between; /* CV à gauche, LinkedIn au centre, Instagram à droite */
   margin: 12px 0 20px;
+  width: 100%;
 }
 
 .cv-link {
@@ -306,10 +307,15 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
   color: var(--brand);
   font-size: 18px;
   text-decoration: underline;
-  flex: 1;              /* chaque lien prend la même largeur */
-  text-align: center;   /* et le texte est centré */
+  flex: 1;
+  text-align: center;
 }
 
+/* Aligne CV à gauche, Instagram à droite */
+.cv-link.left   { text-align: left; }
+.cv-link.center { text-align: center; }
+.cv-link.right  { text-align: right; }
+}
 <script>
   (function(){
     const canHover = window.matchMedia('(hover: hover)').matches &&
@@ -650,12 +656,12 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
     <!-- 👇 Photo -->
     <img class="bio-photo" src="./assets/photo-bio.jpg" alt="Portrait de Mélanie Prunier">
 
-    <!-- 👇 Liens directement sous la photo -->
-    <div class="cv-links">
-      <a class="cv-link" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
-      <a class="cv-link" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
-      <a class="cv-link" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
-    </div>
+    <!-- 👇 Liens : gauche / centre / droite -->
+<div class="cv-links">
+  <a class="cv-link left" href="./assets/CV_Melanie_Prunier.pdf" download>CV</a>
+  <a class="cv-link center" href="https://www.linkedin.com/in/melanieprunier" target="_blank">LinkedIn</a>
+  <a class="cv-link right" href="https://www.instagram.com/meli_plum_art" target="_blank">Instagram</a>
+</div>
 
     <!-- 👇 Texte de bio en dessous -->
     <p style="font-size:18px;line-height:1.5">

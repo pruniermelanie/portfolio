@@ -698,9 +698,6 @@ $('#projects').addEventListener('click', (e) => {
   // Images (ou fallback sur l'image principale)
   if (list.length) {
     list.forEach(src => addImg(src));
-  } else {
-    const main = tile.querySelector('.img-main');
-    if (main) addImg(main.getAttribute('src'));
   }
 
   // Vidéo (UNE seule, à la fin, sur toute la largeur des colonnes)

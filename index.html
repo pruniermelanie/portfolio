@@ -84,12 +84,23 @@ img:fullscreen{
       padding:32px 24px 28px 28px;
     }
 
-    /* Marque */
-    .brand .name{
-      font-size:48px; line-height:30px; letter-spacing:.02em;
-      color:var(--brand); text-transform:uppercase;
-    }
-    .brand .name span{display:block}
+    /* Marque — évite tout chevauchement */
+.brand .name{
+  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
+  font-size: 48px;
+  line-height: 36px;           /* ↑ plus d'air pour les accents */
+  letter-spacing: .02em;
+  color: var(--brand);
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.brand .name span{
+  display: block;
+}
+.brand .name span:first-child{
+  margin-bottom: 10px;         /* espace net entre les 2 lignes */
+}
+
 
     /* ===== MENU (Yi Baiti 36/48, REGULAR, pas d’uppercase forcé) ===== */
     .nav{display:flex; flex-direction:column; gap:8px}

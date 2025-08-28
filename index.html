@@ -743,23 +743,35 @@ $('#projects').addEventListener('click', (e) => {
 
   // Construit la galerie
   g.innerHTML = '';
+// Ajoute une image avec gestion mobile/desktop
+function addImg(src) {
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cursor = 'zoom-in';
 
-  // Ajoute une image + gestion plein écran (avec fallback)
-  const addImg = (src) => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      const el = img;
-      const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
-      if (canFS) {
-        (el.requestFullscreen?.() || el.webkitRequestFullscreen?.()) ?? window.open(el.src, '_blank');
-      } else {
-        window.open(el.src, '_blank');
-      }
-    });
-    g.appendChild(img);
-  };
+  img.addEventListener('click', () => {
+    const isMobileNoHover = document.documentElement.classList.contains('noHover');
+
+    // 👉 Sur mobile : ouvre dans un nouvel onglet (zoom natif)
+    if (isMobileNoHover) {
+      window.open(img.src, '_blank');
+      return;
+    }
+
+    // 👉 Sur desktop : tente plein écran sinon nouvel onglet
+    const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    if (canFS && img.requestFullscreen) {
+      img.requestFullscreen();
+    } else if (canFS && img.webkitRequestFullscreen) {
+      img.webkitRequestFullscreen();
+    } else {
+      window.open(img.src, '_blank');
+    }
+  });
+
+  g.appendChild(img);
+}
+
 
   // Images (ou fallback sur l'image principale)
   if (list.length) {

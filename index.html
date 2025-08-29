@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio — Mélanie Prunier</title>
   <meta name="theme-color" content="#ffffff" />
-  <link rel="preload" as="image" href="./assets/projet-1.jpg" fetchpriority="high">
   <!-- Police de secours si Yi Baiti n'est pas dispo -->
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
 
@@ -828,7 +827,9 @@ if (bioBtn2 && bioDialog) {
   bioDialog.querySelector('.modal-close').addEventListener('click', () => bioDialog.close());
   bioDialog.addEventListener('click', e => { if (e.target === bioDialog) bioDialog.close(); });
   window.addEventListener('keydown', e => { if (e.key === 'Escape' && bioDialog.open) bioDialog.close(); });
-
+});
+});
+});
 
     
 </script>

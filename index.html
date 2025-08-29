@@ -762,27 +762,16 @@ $('#projects').addEventListener('click', (e) => {
   g.innerHTML = '';
 // Ajoute une image avec gestion mobile/desktop
 function addImg(src) {
-  const img = new Image();
+  const img = document.createElement('img');
   img.src = src;
   img.style.cursor = 'zoom-in';
 
-  // optimisation d’affichage dans la modale
-  img.decoding = 'async';
-  img.loading  = 'eager';
-
   img.addEventListener('click', () => {
-    // détecte mobile sans hover (2 méthodes : classe + media query)
-    const isMobileNoHover =
-      document.documentElement.classList.contains('noHover') ||
-      window.matchMedia('(hover: none)').matches;
-
-    // 👉 Sur mobile : nouvel onglet (zoom natif)
+    const isMobileNoHover = document.documentElement.classList.contains('noHover');
     if (isMobileNoHover) {
       window.open(img.src, '_blank');
       return;
     }
-
-    // 👉 Sur desktop : plein écran si possible, sinon nouvel onglet
     const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
     if (canFS && img.requestFullscreen) {
       img.requestFullscreen();
@@ -795,6 +784,7 @@ function addImg(src) {
 
   g.appendChild(img);
 }
+
 
 
 
@@ -839,20 +829,7 @@ if (bioBtn2 && bioDialog) {
   bioDialog.addEventListener('click', e => { if (e.target === bioDialog) bioDialog.close(); });
   window.addEventListener('keydown', e => { if (e.key === 'Escape' && bioDialog.open) bioDialog.close(); });
 
-// Lazy + async sur les vignettes (sauf la première ligne pour garder une LCP rapide)
-  (() => {
-    const allTiles = [...document.querySelectorAll('#projects .tile')];
-    const firstRow = allTiles.slice(0, 4);      // 4 premières vignettes
-    const rest     = allTiles.slice(4);         // le reste
 
-    // Sur toutes les images des tuiles AU-DESSOUS de la première ligne
-    rest.forEach(tile => {
-      tile.querySelectorAll('img').forEach(img => {
-        img.setAttribute('loading',  'lazy');
-        img.setAttribute('decoding', 'async');
-        // si tu connais les dimensions réelles de tes tuiles en 2:3, tu peux ajouter :
-        // img.setAttribute('width','400'); img.setAttribute('height','600');
-      });
     });
   })();
 </script>

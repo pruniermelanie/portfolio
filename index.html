@@ -247,6 +247,28 @@
     .modal-title{font-size:26px; line-height:28px}
     .modal-desc{font-size:18px; line-height:24px}
   }
+    /* Icône "loupe" pour mobile (pas de hover) */
+@media (hover: none) {
+  /* la tuile est déjà position:relative dans ton code */
+  .tile::before{
+    content:"";
+    position:absolute;
+    top:6px;              /* coin haut-gauche */
+    left:6px;
+    width:20px;           /* tout petit */
+    height:20px;
+    z-index:2;
+    pointer-events:none;  /* ne gêne pas les clics */
+    /* Loupe blanche en aplat, avec une mini ombre pour rester visible */
+    background: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>\
+<path fill='%23ffffff' d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5a1 1 0 1 0 1.41-1.41l-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z'/>\
+</svg>") no-repeat center / contain;
+    filter: drop-shadow(0 0 1px rgba(0,0,0,.35));
+    opacity: 0.95;
+  }
+}
+
 </style>
 
 

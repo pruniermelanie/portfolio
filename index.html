@@ -5,335 +5,218 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio — Mélanie Prunier</title>
   <meta name="theme-color" content="#ffffff" />
+  <link rel="preload" as="image" href="./assets/projet-1.jpg" fetchpriority="high">
   <!-- Police de secours si Yi Baiti n'est pas dispo -->
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#fff;
-      --ink:#0a1f44;   /* bleu marine */
-      --brand:#0077ff; /* bleu électrique */
-      --gap:24px;
-      --container:1320px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Microsoft Yi Baiti","Raleway",sans-serif; /* Yi Baiti partout, sinon Raleway */
-      color:var(--ink);
-      background:var(--bg);
-    }
-    img{max-width:100%;display:block}
+  :root{
+    --bg:#fff;
+    --ink:#0a1f44;   /* bleu marine */
+    --brand:#0077ff; /* bleu électrique */
+    --gap:24px;
+    --container:1320px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Microsoft Yi Baiti","Raleway",sans-serif; /* Yi Baiti sinon Raleway */
+    color:var(--ink);
+    background:var(--bg);
+  }
+  img{max-width:100%;display:block}
 
-    /* Même pile de fontes partout (menus + modales) */
-.nav button,
-.modal-title,
-.modal-desc,
-.modal-body {
-  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
-  font-weight: 400;            /* évite l'apparition de gras par défaut */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+  /* Même pile de fontes partout */
+  .nav button,
+  .modal-title,
+  .modal-desc,
+  .modal-body {
+    font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
+  /* Vignettes */
+  .frame {
+    position: relative;
+    aspect-ratio: 2/3;
+    background:#f2f2f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .frame img.img-main {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .frame::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,0.4);
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .tile:hover .frame::after { opacity:1; }
 
+  /* Layout */
+  .shell{display:grid; grid-template-columns:260px 1fr; column-gap:32px; min-height:100dvh;}
+  aside{
+    position:sticky; top:0; height:100dvh;
+    display:flex; flex-direction:column; gap:28px;
+    padding:32px 24px 28px 28px;
+  }
 
-    /* Voile blanc semi-transparent au hover */
-.frame {
-  position: relative;
-  aspect-ratio: 2/3;
-  background:#f2f2f2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.frame img.img-main {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-.frame::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,0.4);
-  opacity:0;
-  transition:opacity .3s ease;
-}
-
-.tile:hover .frame::after {
-  opacity:1;
-}
-/* Plein écran propre sur mobile */
-img:fullscreen{
-  width:100vw; height:100vh; object-fit:contain; background:#000;
-}
-
-
-    /* Layout sobre, marge gauche confortable */
-    .shell{display:grid; grid-template-columns:260px 1fr; column-gap:32px; min-height:100dvh;}
-    aside{
-      position:sticky; top:0; height:100dvh;
-      display:flex; flex-direction:column; gap:28px;
-      padding:32px 24px 28px 28px;
-    }
-
-    /* Marque — évite tout chevauchement */
-.brand .name{
-  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
-  font-size: 48px;
-  line-height: 30px;           /* ↑ plus d'air pour les accents */
-  letter-spacing: .02em;
-  color: var(--brand);
-  text-transform: uppercase;
-  font-weight: 400;
-}
-.brand .name span{
-  display: block;
-}
-.brand .name span:first-child{
-  margin-bottom: 5px;         /* espace net entre les 2 lignes */
-}
-
-
-    /* ===== MENU (Yi Baiti 36/48, REGULAR, pas d’uppercase forcé) ===== */
-    .nav{display:flex; flex-direction:column; gap:8px}
-.nav button{
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  text-align: left;
-  cursor: pointer;
-  font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
-  font-size: 36px;
-  line-height: 48px;
-  font-weight: 400;                 /* garanti regular */
-  color: var(--ink);
-  text-transform: none;
-  letter-spacing: .01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-    .nav button[aria-pressed="true"]{text-decoration:underline}
-    .nav button:hover{color:var(--brand)}
-
-    main{padding:32px 32px 40px 0}
-    .container{max-width:var(--container); margin:0 auto; width:100%}
-
-    /* Grille — 4 colonnes, boutons images, SANS cadre */
-    .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap)}
-    .tile{position:relative; overflow:hidden; background:#fff; border:none}
-    .frame{aspect-ratio:2/3; background:#f2f2f2; position:relative}
-    .img-main,.img-preview{
-      position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .18s ease;
-    }
-    .img-main{opacity:1}
-    .img-preview{opacity:0}
-    /* === GESTION DU HOVER SELON LE DEVICE === */
-
-/* Effet hover UNIQUEMENT si l’appareil sait vraiment hover */
-.hasHover .tile:hover .img-main{opacity:0}
-.hasHover .tile:hover .img-preview{opacity:1}
-.hasHover .tile:hover .frame::after{opacity:1}
-
-/* Sur appareils sans hover : on ne montre jamais la preview */
-.noHover .img-preview{display:none !important;}
-    
-
-    /* ===== MODALE PROJET ===== */
-    dialog#project{
-      width:min(980px,94vw); border:1px solid #e5e5e5; border-radius:8px;
-      padding:0; background:#fff;
-    }
-    dialog#project::backdrop{background:rgba(0,0,0,.45)}
-    .modal-head{
-      padding:22px; border-bottom:1px solid #eee; text-align:center;
-    }
-    .modal-title,
-    .modal-desc,
-    .modal-body{ font-family:"Microsoft Yi Baiti",sans-serif; font-weight:400; }
-    .modal-title{
-      margin:0; color:var(--brand);
-      text-transform:uppercase; letter-spacing:.02em;
-      font-size:32px; line-height:36px; /* Regular, pas gras */
-    }
-    .modal-desc {
-  margin:10px 0 0 0;
-  color:var(--ink);
-  font-size:20px;
-  line-height:28px;
-  white-space:pre-line;
-  text-align:left;   /* ← aligne le texte à gauche */
-}
-
-    .modal-body{
-  padding:16px 16px 22px; max-height:72vh; overflow:auto;
-}
-.gallery{
-  display:grid;
-  grid-template-columns: repeat(var(--cols,1), 1fr); /* défaut: 1 colonne */
-  gap:16px;
-}
-.gallery img{width:100%; height:auto; object-fit:cover}
-
-/* Mobile : 1 colonne */
-@media (max-width: 860px){
+  /* Marque */
   .brand .name{
-    font-size: 42px;
-    line-height: 36px;
+    font-family: "Microsoft Yi Baiti", "Raleway", sans-serif;
+    font-size: 48px;
+    line-height: 30px;
+    letter-spacing: .02em;
+    color: var(--brand);
+    text-transform: uppercase;
+    font-weight: 400;
   }
-  .brand .name span:first-child{
-    margin-bottom: 12px;       /* un peu plus d'espace sur mobile */
+  .brand .name span{ display:block; }
+  .brand .name span:first-child{ margin-bottom:5px; }
+
+  /* Menu */
+  .nav{display:flex; flex-direction:column; gap:8px}
+  .nav button{
+    appearance:none; background:none; border:none; padding:0; text-align:left; cursor:pointer;
+    font-family:"Microsoft Yi Baiti","Raleway",sans-serif;
+    font-size:36px; line-height:48px; font-weight:400;
+    color:var(--ink); text-transform:none; letter-spacing:.01em;
   }
-}
+  .nav button[aria-pressed="true"]{text-decoration:underline}
+  .nav button:hover{color:var(--brand)}
 
+  main{padding:32px 32px 40px 0}
+  .container{max-width:var(--container); margin:0 auto; width:100%}
 
-    .modal-close{
-      position:absolute; top:10px; right:10px;
-      width:40px; height:40px; border:none; border-radius:999px; cursor:pointer;
-      background:rgba(0,0,0,.65); color:#fff; font-size:18px;
-    }
-    .modal-close:focus-visible{outline:2px solid var(--brand)}
-
-    /* Responsive */
-    @media (max-width:1100px){
-      .shell{grid-template-columns:220px 1fr}
-      .container{max-width:980px}
-      .grid{grid-template-columns:repeat(3,1fr)}
-    }
-    @media (max-width:860px){
-      .shell{grid-template-columns:1fr}
-      aside{position:relative; height:auto; flex-direction:row; flex-wrap:wrap; gap:16px}
-      .nav{flex-direction:row; flex-wrap:wrap; gap:16px}
-      main{padding:24px}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .nav button{font-size:28px; line-height:38px}
-      /* sur mobile, la modale force 1 colonne pour la lisibilité */
-      .modal-body{ grid-template-columns:1fr; }
-    }
-    @media (max-width:520px){
-      .grid{grid-template-columns:1fr}
-      .nav button{font-size:24px; line-height:32px}
-      .modal-title{font-size:26px; line-height:28px}
-      .modal-desc{font-size:18px; line-height:24px}
-    }
-    /* Plein écran propre pour les images ouvertes */
-img:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
-  background: #000;
-
-}/* Plein écran cross‑browser */
-img:fullscreen,
-img:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
-  background: #000;
-}
-
-
-}
-/* Quand une <dialog> est ouverte, on bloque le scroll body */
-body:has(dialog[open]) {
-  overflow: hidden;
-}
-/* ==== Bio&CV : même style que la modale projet ==== */
-dialog#bio-cv{
-  width:min(680px,94vw);
-  border:1px solid #e5e5e5;
-  border-radius:8px;
-  padding:0;
-  background:#fff;
-}
-dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
-#bio-cv .modal-head{
-  padding:22px; border-bottom:1px solid #eee; text-align:center;
-}
-#bio-cv .modal-title{
-  margin:0; color:var(--brand);
-  text-transform:uppercase; letter-spacing:.02em;
-  font-size:32px; line-height:36px; font-weight:400;
-}
-#bio-cv .modal-body{
-  padding:16px 16px 22px; max-height:72vh; overflow:auto;
-}
-#bio-cv p{
-  font-size:18px; line-height:1.5; margin:0 0 12px 0; text-decoration:none;
-}
-
-/* bouton fermer dans Bio&CV (identique) */
-#bio-cv .modal-close{
-  position:absolute; top:10px; right:10px;
-  width:40px; height:40px; border:none; border-radius:999px; cursor:pointer;
-  background:rgba(0,0,0,.65); color:#fff; font-size:18px;
-}
-@media (max-width: 860px){
-  #bio-cv .modal-close{ width:48px; height:48px; font-size:20px; }
-}
-
-/* liens dans Bio&CV : pas soulignés par défaut, sauf le bouton CV */
-#bio-cv a{ color:inherit; text-decoration:none; }
-#bio-cv .cv-link{
-  font-weight:700; color:var(--brand); text-decoration:underline;
-  display:inline-block; margin-top:12px; font-size:20px;
-}
-.bio-photo {
-  display: block;
-  margin: 0 auto 16px; /* centre + espace en dessous */
-  width: 140px; 
-  height: 140px;
-  border-radius: 50%; /* ronde */
-  object-fit: cover;
-}
-
-.cv-links {
-  display: flex;
-  justify-content: space-between; /* mobile par défaut */
-  margin-top: 16px;
-}
-
-/* Sur écrans larges (ex. > 860px = PC), tout recentré */
-@media (min-width: 860px) {
-  .cv-links {
-    justify-content: center;   /* centre le bloc */
-    gap: 32px;                 /* espace régulier entre chaque lien */
+  /* Grille */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap)}
+  .tile{position:relative; overflow:hidden; background:#fff; border:none}
+  .frame{aspect-ratio:2/3; background:#f2f2f2; position:relative}
+  .img-main,.img-preview{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .18s ease;
   }
-}
+  .img-main{opacity:1}
+  .img-preview{opacity:0}
 
-.cv-link {
-  font-weight: bold;
-  color: var(--brand);
-  font-size: 18px;
-  text-decoration: underline;
-}
+  /* Hover seulement si device le supporte (classe ajoutée en JS) */
+  .hasHover .tile:hover .img-main{opacity:0}
+  .hasHover .tile:hover .img-preview{opacity:1}
+  .hasHover .tile:hover .frame::after{opacity:1}
+  .noHover .img-preview{display:none !important;}
 
-.cv-link.left   { text-align: left; }
-.cv-link.center { text-align: center; }
-.cv-link.right  { text-align: right; }
+  /* Modale projet */
+  dialog#project{
+    width:min(980px,94vw); border:1px solid #e5e5e5; border-radius:8px;
+    padding:0; background:#fff;
+  }
+  dialog#project::backdrop{background:rgba(0,0,0,.45)}
+  .modal-head{ padding:22px; border-bottom:1px solid #eee; text-align:center; }
+  .modal-title,
+  .modal-desc,
+  .modal-body{ font-family:"Microsoft Yi Baiti", "Raleway", sans-serif; font-weight:400; }
+  .modal-title{
+    margin:0; color:var(--brand);
+    text-transform:uppercase; letter-spacing:.02em;
+    font-size:32px; line-height:36px;
+  }
+  .modal-desc{
+    margin:10px 0 0 0; color:var(--ink);
+    font-size:20px; line-height:28px;
+    white-space:pre-line; text-align:left;
+  }
+  .modal-body{ padding:16px 16px 22px; max-height:72vh; overflow:auto; }
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(var(--cols,1), 1fr);
+    gap:16px;
+  }
+  .gallery img{width:100%; height:auto; object-fit:cover}
 
-}
-<script>
-  (function(){
-    const canHover = window.matchMedia('(hover: hover)').matches &&
-                     window.matchMedia('(pointer: fine)').matches;
-    document.documentElement.classList.toggle('hasHover', canHover);
-    document.documentElement.classList.toggle('noHover', !canHover);
-  })();
-</script>
+  /* Plein écran images (cross-browser) */
+  img:fullscreen,
+  img:-webkit-full-screen {
+    width:100vw; height:100vh; object-fit:contain; background:#000;
+  }
+
+  /* Bloque le scroll de fond quand une modale est ouverte */
+  body:has(dialog[open]) { overflow: hidden; }
+
+  /* Bio & CV */
+  dialog#bio-cv{
+    width:min(680px,94vw);
+    border:1px solid #e5e5e5; border-radius:8px;
+    padding:0; background:#fff;
+  }
+  dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
+  #bio-cv .modal-head{ padding:22px; border-bottom:1px solid #eee; text-align:center; }
+  #bio-cv .modal-title{
+    margin:0; color:var(--brand);
+    text-transform:uppercase; letter-spacing:.02em;
+    font-size:32px; line-height:36px; font-weight:400;
+  }
+  #bio-cv .modal-body{ padding:16px 16px 22px; max-height:72vh; overflow:auto; }
+  #bio-cv p{ font-size:18px; line-height:1.5; margin:0 0 12px 0; text-decoration:none; }
+  #bio-cv .modal-close{
+    position:absolute; top:10px; right:10px;
+    width:40px; height:40px; border:none; border-radius:999px; cursor:pointer;
+    background:rgba(0,0,0,.65); color:#fff; font-size:18px;
+  }
+
+  /* Photo bio */
+  .bio-photo{
+    display:block; margin:0 auto 16px;
+    width:140px; height:140px; border-radius:50%; object-fit:cover;
+  }
+
+  /* Liens bio */
+  .cv-links{ display:flex; justify-content:space-between; margin-top:16px; }
+  @media (min-width: 860px){
+    .cv-links{ justify-content:center; gap:32px; }
+  }
+  .cv-link{
+    font-weight:bold; color:var(--brand);
+    font-size:18px; text-decoration:underline;
+  }
+
+  /* Responsive */
+  @media (max-width:1100px){
+    .shell{grid-template-columns:220px 1fr}
+    .container{max-width:980px}
+    .grid{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr}
+    aside{position:relative; height:auto; flex-direction:row; flex-wrap:wrap; gap:16px}
+    .nav{flex-direction:row; flex-wrap:wrap; gap:16px}
+    main{padding:24px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .nav button{font-size:28px; line-height:38px}
+    .modal-body{ grid-template-columns:1fr; }
+    .brand .name{ font-size:42px; line-height:36px; }
+    .brand .name span:first-child{ margin-bottom:12px; }
+  }
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr}
+    .nav button{font-size:24px; line-height:32px}
+    .modal-title{font-size:26px; line-height:28px}
+    .modal-desc{font-size:18px; line-height:24px}
+  }
+</style>
 
 
 
-  </style>
 </head>
 <body>
   <div class="shell">
@@ -638,7 +521,7 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
       </div>
     </main>
   </div>
-  </a>
+
 
   <!-- ===== MODALE one-page ===== -->
 <dialog id="project" aria-label="Détails du projet">
@@ -685,39 +568,32 @@ dialog#bio-cv::backdrop{background:rgba(0,0,0,.45)}
 
 
 <script>
-  // utilitaires
-  const $ = (s, e = document) => e.querySelector(s);
-  const $$ = (s, e = document) => [...e.querySelectorAll(s)];
+/* Utils */
+const $  = (s, e=document)=>e.querySelector(s);
+const $$ = (s, e=document)=>[...e.querySelectorAll(s)];
 
-   /* === Détection hover/noHover — À AJOUTER ICI === */
-  (function(){
-    // "desktop" typique : hover + pointeur fin (souris)
-    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
-    function apply(){
-      const canHover = mq.matches;
-      document.documentElement.classList.toggle('hasHover', canHover);
-      document.documentElement.classList.toggle('noHover', !canHover);
-    }
-    // initialise
-    apply();
-    // met à jour si l’OS change le mode pointeur (ex: tablette avec stylet/souris)
-    if (mq.addEventListener) mq.addEventListener('change', apply);
-    else if (mq.addListener) mq.addListener(apply); // vieux Safari
-  })();
-  /* === fin détection === */
+/* Détection hover / noHover (ajoute des classes au <html>) */
+(function(){
+  const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+  function apply(){
+    const canHover = mq.matches;
+    document.documentElement.classList.toggle('hasHover', canHover);
+    document.documentElement.classList.toggle('noHover', !canHover);
+  }
+  apply();
+  mq.addEventListener?.('change', apply);
+  mq.addListener?.(apply); // vieux Safari
+})();
 
- // Filtres menu (+ ignore Bio&CV qui ouvre sa propre modale)
+/* Filtres menu (Bio&CV géré à part) */
 const tiles = $$('#projects .tile');
 const bioBtn = $('.nav button[data-filter="Bio&CV"]');
 
 $$('.nav button').forEach(btn=>{
   btn.addEventListener('click',(ev)=>{
-    // si c'est le bouton Bio&CV, on ne filtre pas ici (la modale s'ouvre ailleurs)
-    if (bioBtn && btn === bioBtn) return;
-
+    if (bioBtn && btn === bioBtn) return; // on n’applique pas le filtre pour Bio&CV
     $$('.nav button').forEach(b=>b.setAttribute('aria-pressed','false'));
     btn.setAttribute('aria-pressed','true');
-
     const f = (btn.dataset.filter || 'all').toLowerCase();
     tiles.forEach(t=>{
       t.style.display = (f==='all' || t.dataset.category===f) ? '' : 'none';
@@ -725,74 +601,53 @@ $$('.nav button').forEach(btn=>{
   });
 });
 
+/* Cache les previews manquantes */
+$$('.img-preview').forEach(pre=> pre.addEventListener('error', ()=> pre.style.display='none'));
 
-  // Cache silencieusement l'image de hover si elle n'existe pas
-  $$('.img-preview').forEach(pre => {
-    pre.addEventListener('error', () => { pre.style.display = 'none'; });
-  });
-
-// ===== MODALE : titre + description + galerie (version déléguée, gère 24+ projets) =====
+/* Modale PROJET (déléguée) */
 const dialog  = $('#project');
-const g       = $('#gallery');
+const gallery = $('#gallery');
 const titleEl = $('.modal-title');
 const descEl  = $('.modal-desc');
 
-// Un seul écouteur sur le conteneur : fonctionne pour tous les .tile existants ou futurs
-$('#projects').addEventListener('click', (e) => {
+$('#projects').addEventListener('click', (e)=>{
   const tile = e.target.closest('.tile');
-  if (!tile) return;           // clic en dehors d'une vignette
+  if (!tile) return;
   e.preventDefault();
 
-  // Récupère les données du projet
   const title = tile.dataset.title || '';
   const desc  = tile.dataset.description || '';
-  const list  = (tile.dataset.images || '').split(',').map(s => s.trim()).filter(Boolean);
+  const list  = (tile.dataset.images || '').split(',').map(s=>s.trim()).filter(Boolean);
   const video = tile.dataset.video;
+  const cols  = parseInt(tile.dataset.cols || '1', 10);
 
-  // Alimente l'entête de la modale
   titleEl.textContent = title;
   descEl.textContent  = desc;
+  gallery.style.setProperty('--cols', isNaN(cols) ? 1 : cols);
+  gallery.innerHTML = '';
 
-  // Colonnes personnalisées par projet (ex: data-cols="2"), défaut = 1
-  const cols = parseInt(tile.dataset.cols || '1', 10);
-  g.style.setProperty('--cols', isNaN(cols) ? 1 : cols);
-
-  // Construit la galerie
-  g.innerHTML = '';
-// Ajoute une image avec gestion mobile/desktop
-function addImg(src) {
-  const img = document.createElement('img');
-  img.src = src;
-  img.style.cursor = 'zoom-in';
-
-  img.addEventListener('click', () => {
-    const isMobileNoHover = document.documentElement.classList.contains('noHover');
-    if (isMobileNoHover) {
-      window.open(img.src, '_blank');
-      return;
-    }
-    const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
-    if (canFS && img.requestFullscreen) {
-      img.requestFullscreen();
-    } else if (canFS && img.webkitRequestFullscreen) {
-      img.webkitRequestFullscreen();
-    } else {
-      window.open(img.src, '_blank');
-    }
-  });
-
-  g.appendChild(img);
-}
-
-
-
-
-  // Images (ou fallback sur l'image principale)
-  if (list.length) {
-    list.forEach(src => addImg(src));
+  function addImg(src){
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'eager';
+    img.decoding = 'async';
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', ()=>{
+      const isMobile = document.documentElement.classList.contains('noHover');
+      if (isMobile) {
+        window.open(img.src, '_blank'); // zoom natif mobile
+      } else {
+        const canFS = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+        if (canFS && img.requestFullscreen) img.requestFullscreen();
+        else if (canFS && img.webkitRequestFullscreen) img.webkitRequestFullscreen();
+        else window.open(img.src, '_blank');
+      }
+    });
+    gallery.appendChild(img);
   }
 
-  // Vidéo (UNE seule, à la fin, sur toute la largeur des colonnes)
+  if (list.length) list.forEach(addImg);
+
   if (video) {
     const vid = document.createElement('video');
     vid.src = video;
@@ -800,38 +655,42 @@ function addImg(src) {
     vid.playsInline = true;
     vid.style.width = '100%';
     vid.style.marginTop = '24px';
-    vid.style.gridColumn = `span ${cols}`;
-    g.appendChild(vid);
+    vid.style.gridColumn = `span ${isNaN(cols)?1:cols}`;
+    gallery.appendChild(vid);
   }
 
-  // Ouvre la modale
   dialog.showModal();
 });
 
+/* Fermeture modale projet */
+$('.modal-close')?.addEventListener('click', ()=> dialog.close());
+dialog?.addEventListener('click', e=>{ if (e.target===dialog) dialog.close(); });
+window.addEventListener('keydown', e=>{ if (e.key==='Escape' && dialog?.open) dialog.close(); });
 
-  $('.modal-close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-  window.addEventListener('keydown', e => { if (e.key === 'Escape' && dialog.open) dialog.close(); });
-
-
-// Script pour la modale Bio&CV (ouvre la modale, sans filtrer la grille)
-const bioBtn2 = $('.nav button[data-filter="Bio&CV"]');
-const bioDialog = document.getElementById('bio-cv');
-
-if (bioBtn2 && bioDialog) {
-  bioBtn2.addEventListener('click', (e) => {
+/* Modale Bio&CV (indépendante) */
+const bioDialog = $('#bio-cv');
+if (bioBtn && bioDialog) {
+  bioBtn.addEventListener('click', (e)=>{
     e.preventDefault();
-    // ne touche pas aux aria-pressed ici, c’est juste une modale indépendante
     bioDialog.showModal();
   });
-  bioDialog.querySelector('.modal-close').addEventListener('click', () => bioDialog.close());
-  bioDialog.addEventListener('click', e => { if (e.target === bioDialog) bioDialog.close(); });
-  window.addEventListener('keydown', e => { if (e.key === 'Escape' && bioDialog.open) bioDialog.close(); });
-});
-});
-});
+  bioDialog.querySelector('.modal-close')?.addEventListener('click', ()=> bioDialog.close());
+  bioDialog.addEventListener('click', e=>{ if (e.target===bioDialog) bioDialog.close(); });
+  window.addEventListener('keydown', e=>{ if (e.key==='Escape' && bioDialog.open) bioDialog.close(); });
+}
 
-    
+/* Lazy/async sur les vignettes sous la 1ère ligne */
+(function(){
+  const allTiles = $$('#projects .tile');
+  const rest = allTiles.slice(4);
+  rest.forEach(tile=>{
+    tile.querySelectorAll('img').forEach(img=>{
+      img.setAttribute('loading','lazy');
+      img.setAttribute('decoding','async');
+    });
+  });
+})();
 </script>
+
 </body>
 </html>

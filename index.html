@@ -8,6 +8,9 @@
   <link rel="preload" as="image" href="./assets/projet-1.jpg" fetchpriority="high">
   <!-- Police de secours si Yi Baiti n'est pas dispo -->
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 
   <style>
   :root{
@@ -702,14 +705,16 @@ $('#projects').addEventListener('click', (e)=>{
   if (list.length) list.forEach(addImg);
 
   if (video) {
-    const vid = document.createElement('video');
-    vid.src = video;
-    vid.controls = true;
-    vid.playsInline = true;
-    vid.style.width = '100%';
-    vid.style.marginTop = '24px';
-    vid.style.gridColumn = `span ${isNaN(cols)?1:cols}`;
-    gallery.appendChild(vid);
+  const vid = document.createElement('video');
+vid.src = video;
+vid.controls = true;
+vid.playsInline = true;
+vid.preload = 'metadata'; // ← important : ne télécharge pas toute la vidéo
+vid.style.width = '100%';
+vid.style.marginTop = '24px';
+vid.style.gridColumn = `span ${isNaN(cols)?1:cols}`;
+gallery.appendChild(vid);
+
   }
 
   dialog.showModal();
@@ -731,6 +736,12 @@ if (bioBtn && bioDialog) {
   bioDialog.addEventListener('click', e=>{ if (e.target===bioDialog) bioDialog.close(); });
   window.addEventListener('keydown', e=>{ if (e.key==='Escape' && bioDialog.open) bioDialog.close(); });
 }
+/* Optim : n'active pas le téléchargement agressif des images de hover */
+document.querySelectorAll('.img-preview').forEach(img=>{
+  img.setAttribute('loading','lazy');
+  img.setAttribute('decoding','async');
+  img.setAttribute('fetchpriority','low'); // moins prioritaire que les vignettes principales
+});
 
 /* Lazy/async sur les vignettes sous la 1ère ligne */
 (function(){

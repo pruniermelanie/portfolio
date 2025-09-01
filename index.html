@@ -284,48 +284,47 @@
   box-shadow: 0 2px 6px rgba(0,0,0,.25);
 }
 
-/* Picto "lecture" cercle contour + triangle blanc plein — mobile uniquement (noHover) */
+/* Picto "lecture" discret sur mobile */
 .noHover .tile[data-video]::after {
   content: "";
   position: absolute;
-  top: 65%;               /* vers le bas (2/3 de la hauteur) */
+  top: 75%;               /* plus bas dans l’image */
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
+  width: 40px;            /* cercle plus petit */
+  height: 40px;
   border-radius: 50%;
-  border: 4px solid rgba(255,255,255,0.85); /* cercle contour blanc semi-transparent */
-  z-index: 2;
+  border: 2px solid rgba(255,255,255,0.35); /* cercle très discret */
+  z-index: 3;
   pointer-events: none;
 }
 
-/* Triangle lecture blanc plein au centre */
+/* Triangle blanc au centre */
 .noHover .tile[data-video]::before {
   content: "";
   position: absolute;
-  top: 65%;
+  top: 75%;
   left: 50%;
-  transform: translate(-35%, -50%); /* décalage optique pour le centrage */
+  transform: translate(-40%, -50%); /* ajustement pour centrer le triangle */
   width: 0;
   height: 0;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
-  border-left: 28px solid #fff;   /* triangle blanc plein */
+  border-top: 10px solid transparent;  
+  border-bottom: 10px solid transparent;
+  border-left: 18px solid #fff;        /* triangle blanc */
   z-index: 4;
   pointer-events: none;
 }
 
-/* Version un peu plus grande sur petits écrans */
+/* Encore plus petit sur très petits écrans */
 @media (max-width: 520px) {
   .noHover .tile[data-video]::after {
-    width: 84px;
-    height: 84px;
-    border-width: 3px;
+    width: 34px;
+    height: 34px;
   }
   .noHover .tile[data-video]::before {
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
-    border-left: 28px solid #fff;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 16px solid #fff;
   }
 }
 

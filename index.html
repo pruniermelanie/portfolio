@@ -284,33 +284,48 @@
   box-shadow: 0 2px 6px rgba(0,0,0,.25);
 }
 
-/* Triangle lecture blanc au centre */
+/* Picto "lecture" cercle contour + triangle blanc plein — mobile uniquement (noHover) */
+.noHover .tile[data-video]::after {
+  content: "";
+  position: absolute;
+  top: 65%;               /* vers le bas (2/3 de la hauteur) */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.85); /* cercle contour blanc semi-transparent */
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Triangle lecture blanc plein au centre */
 .noHover .tile[data-video]::before {
   content: "";
   position: absolute;
   top: 65%;
   left: 50%;
-  transform: translate(-40%, -50%); /* décalage pour centrage optique */
+  transform: translate(-35%, -50%); /* décalage optique pour le centrage */
   width: 0;
   height: 0;
   border-top: 14px solid transparent;
   border-bottom: 14px solid transparent;
-  border-left: 22px solid #fff;   /* triangle blanc */
-  opacity: 0.95;
+  border-left: 24px solid #fff;   /* triangle blanc plein */
   z-index: 4;
   pointer-events: none;
 }
 
-/* Ajuste la taille sur petits écrans */
+/* Version un peu plus grande sur petits écrans */
 @media (max-width: 520px) {
   .noHover .tile[data-video]::after {
     width: 84px;
     height: 84px;
+    border-width: 3px;
   }
   .noHover .tile[data-video]::before {
     border-top: 16px solid transparent;
     border-bottom: 16px solid transparent;
-    border-left: 26px solid #fff;
+    border-left: 28px solid #fff;
   }
 }
 

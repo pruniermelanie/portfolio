@@ -268,30 +268,52 @@
 /* Masque la loupe sur desktop */
 .hasHover .tile::before{ display:none; }
 
-    /* Picto "lecture" blanc sur mobile uniquement, si la tuile a data-video */
+    /* Picto "lecture" cercle blanc + triangle blanc, sur mobile uniquement (noHover) */
 .noHover .tile[data-video]::after {
   content: "";
   position: absolute;
-  top: 35%;              /* ~ 2/3 en partant du haut */
+  top: 65%;              /* vers le bas (2/3 de la hauteur) */
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E")
-    no-repeat center / contain;
-  opacity: 0.7;
-  pointer-events: none;  /* ne bloque pas les clics */
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.75); /* cercle blanc translucide */
   z-index: 3;
-  filter: drop-shadow(0 0 3px rgba(0,0,0,.5));
+  pointer-events: none;  
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
 }
 
-/* Encore un peu plus gros sur très petits écrans */
+/* Triangle lecture blanc au centre */
+.noHover .tile[data-video]::before {
+  content: "";
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-40%, -50%); /* décalage pour centrage optique */
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 22px solid #fff;   /* triangle blanc */
+  opacity: 0.95;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Ajuste la taille sur petits écrans */
 @media (max-width: 520px) {
   .noHover .tile[data-video]::after {
-    width: 90px;
-    height: 90px;
+    width: 84px;
+    height: 84px;
+  }
+  .noHover .tile[data-video]::before {
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    border-left: 26px solid #fff;
   }
 }
+
 
 
 

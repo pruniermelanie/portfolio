@@ -268,6 +268,32 @@
 /* Masque la loupe sur desktop */
 .hasHover .tile::before{ display:none; }
 
+    /* Picto "lecture" blanc : seulement sur mobile (noHover) et si la tuile a data-video */
+.noHover .tile[data-video]::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  opacity: 0.9;
+  pointer-events: none; /* ne bloque pas les clics */
+  z-index: 3;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+}
+
+/* Version un peu plus grande sur très petits écrans */
+@media (max-width: 520px) {
+  .noHover .tile[data-video]::after {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+
 
 </style>
 

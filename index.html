@@ -286,7 +286,7 @@
 .hasHover .tile::before{ display:none; }
 
     /* Picto "lecture" cercle blanc + triangle blanc, sur mobile uniquement (noHover) */
-.tile[data-video]::after {
+.noHover .tile[data-video]::after {
   content: "";
   position: absolute;
   top: 65%;              /* vers le bas (2/3 de la hauteur) */
@@ -302,7 +302,7 @@
 }
 
 /* Picto "lecture" discret sur mobile */
-.tile[data-video]::after {
+.noHover .tile[data-video]::after {
   content: "";
   position: absolute;
   top: 75%;               /* plus bas dans l’image */
@@ -317,7 +317,7 @@
 }
 
 /* Triangle blanc au centre */
-.tile[data-video]::before {
+.noHover .tile[data-video]::before {
   content: "";
   position: absolute;
   top: 75%;
@@ -334,11 +334,11 @@
 
 /* Encore plus petit sur très petits écrans */
 @media (max-width: 520px) {
-  .tile[data-video]::after {
+  .noHover .tile[data-video]::after {
     width: 34px;
     height: 34px;
   }
-  .tile[data-video]::before {
+  .noHover .tile[data-video]::before {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 16px solid #fff;

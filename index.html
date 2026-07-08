@@ -3,31 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio Mélanie Prunier</title>
+  <title>Portfolio — Mélanie Prunier</title>
   <meta name="theme-color" content="#ffffff" />
   <link rel="preload" as="image" href="./assets/projet-1.jpg" fetchpriority="high">
   <!-- Police de secours si Yi Baiti n'est pas dispo -->
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Open Graph -->
-<meta property="og:title" content="Portfolio Mélanie Prunier">
-<meta property="og:description" content="Illustration, gravure, animation, storyboard et écriture">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.melanieprunier.com/">
-<meta property="og:image" content="https://www.melanieprunier.com/assets/preview.jpg">
-<meta property="og:image:secure_url" content="https://www.melanieprunier.com/assets/preview.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Portfolio Mélanie Prunier">
-<meta name="twitter:description" content="Illustration, gravure, animation, storyboard et écriture.">
-<meta name="twitter:image" content="https://www.melanieprunier.com/assets/preview.jpg">
-
-
 
   <style>
   :root{
@@ -285,69 +265,6 @@
 /* Masque la loupe sur desktop */
 .hasHover .tile::before{ display:none; }
 
-    /* Picto "lecture" cercle blanc + triangle blanc, sur mobile uniquement (noHover) */
-.noHover .tile[data-video]::after {
-  content: "";
-  position: absolute;
-  top: 65%;              /* vers le bas (2/3 de la hauteur) */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.75); /* cercle blanc translucide */
-  z-index: 3;
-  pointer-events: none;  
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-}
-
-/* Picto "lecture" discret sur mobile */
-.noHover .tile[data-video]::after {
-  content: "";
-  position: absolute;
-  top: 75%;               /* plus bas dans l’image */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;            /* cercle plus petit */
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.35); /* cercle très discret */
-  z-index: 3;
-  pointer-events: none;
-}
-
-/* Triangle blanc au centre */
-.noHover .tile[data-video]::before {
-  content: "";
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-40%, -50%); /* ajustement pour centrer le triangle */
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;  
-  border-bottom: 10px solid transparent;
-  border-left: 18px solid #fff;        /* triangle blanc */
-  z-index: 4;
-  pointer-events: none;
-}
-
-/* Encore plus petit sur très petits écrans */
-@media (max-width: 520px) {
-  .noHover .tile[data-video]::after {
-    width: 34px;
-    height: 34px;
-  }
-  .noHover .tile[data-video]::before {
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 16px solid #fff;
-  }
-}
-
-
-
-
 
 </style>
 
@@ -364,30 +281,46 @@
       <div class="nav" role="group" aria-label="Catégories">
         <button data-filter="all" aria-pressed="true">Tout</button>
         <button data-filter="illustration">Illustration & édition</button>
-        <button data-filter="communication">Communication</button>
-        <button data-filter="theatre">Théâtre</button>
+        <button data-filter="realisation">Réalisation</button>
         <button data-filter="storyboard">Storyboard</button>
         <button data-filter="animation">Animation</button>
+        <button data-filter="communication">Communication</button>
+        <button data-filter="theatre">Théâtre</button>
         <button data-filter="Bio&CV">Bio&CV</button>
       </div>
 
-      <div style="margin-top:auto; color:#666; font-size:18px">
-  contact : <a href="mailto:prunier.melanie@gmail.com">prunier.melanie@gmail.com</a><br>
-  <a href="https://poiplum.sumupstore.com/" target="_blank" style="color:var(--brand); text-decoration:underline;">
-    Boutique en ligne
-  </a>
-</div>
-
+      <div style="margin-top:auto; color:#666; font-size:20px">
+        contact : <a href="mailto:prunier.melanie@gmail.com">prunier.melanie@gmail.com</a>
+      </div>
     </aside>
 
     <main>
       <div class="container">
         <section class="grid" id="projects">
-          <!-- Illustration -->
+    <!-- Réalisation -->
+          <a href="#" class="tile" data-category="realisation"
+             data-title="L'Épopée Temporelle"
+             data-description="Supervision de la réalisation des épisodes de la saison 2 à partir d’animatiques existants : direction des équipes de fabrication, suivi artistique, cohérence narrative et visuelle."
+           data-images="">
+            <div class="frame">
+              <img class="img-main"    src="./assets/projet-25.jpg"       alt="Projet 25">
+              <img class="img-preview" src="./assets/projet-25-hover.jpg" alt="">
+            </div>
+          </a>
+    <!-- Illustration -->
+<a href="#" class="tile" data-category="illustration"
+   data-title="ICI ET AILLEURS"
+   data-description="2026, ensemble de linogravures mettant en scène les biodiversités japonaises et charentaises, afin d’inviter à porter sur la faune et la flore locales le même regard émerveillé que celui que l’on pose sur les biosphères exotiques. Un livret poétique de sensibilisation accompagnera les tableaux."
+   data-images="./assets/projet-0-detail1.jpg,./assets/projet-0-detail2.jpg">
+  <div class="frame">
+    <img class="img-main"    src="./assets/projet-0.jpg"        alt="Projet 0">
+    <img class="img-preview" src="./assets/projet-0-hover.jpg"  alt="">
+  </div>
+</a>
+
 <a href="#" class="tile" data-category="illustration"
    data-title="LES DÉMONIALES DE PORT-ROYAL"
-   data-description="2025, projet de bande dessinée en linogravure sur la rébellion des nonnes de Port-Royal face aux pouvoirs royal et religieux au XVIIè siècle.
-  Ce projet a reçu la bourse de la SCAM Brouillon d'un Rêve Dessin&Photo 2025."
+   data-description="2025, projet de bande dessinée en linogravure sur la rébellion des nonnes de Port-Royal face aux pouvoirs royal et religieux au XVIIè siècle."
    data-images="./assets/projet-1-detail1.jpg,./assets/projet-1-detail2.jpg,./assets/projet-1-detail3.jpg,./assets/projet-1-detail4.jpg,./assets/projet-1-detail5.jpg">
   <div class="frame">
     <img class="img-main"    src="./assets/projet-1.jpg"        alt="Projet 1">
@@ -619,8 +552,8 @@
               <img class="img-preview" src="./assets/projet-21-hover.jpg"  alt="">
             </div>
             </a>
-          <!-- Animation -->
-          <a href="#" class="tile" data-category="animation"
+          <!-- Réalisation -->
+          <a href="#" class="tile" data-category="realisation"
              data-title="Kuri"
              data-description="Petit conte du printemps sur un air de flûte peule.
               Film de fin d'étude de l'EMCI co-réalisé avec Alice Bohl en 2007.
@@ -632,8 +565,8 @@
               <img class="img-preview" src="./assets/projet-22-hover.jpg"  alt="">
             </div>  
             </a>
-          <!-- Animation -->
-          <a href="#" class="tile" data-category="animation"
+          <!-- Réalisation -->
+          <a href="#" class="tile" data-category="realisation"
              data-title="Pépins de melon"
              data-description="Le collectionneur, heureux dans l'abîme, parsemait son esprit de choses inutiles.
             Film de fin d'étude de l'Emca, 2006.
@@ -644,8 +577,8 @@
               <img class="img-preview" src="./assets/projet-23-hover.jpg"  alt="">
             </div>
              </a>
-          <!-- Animation -->
-          <a href="#" class="tile" data-category="animation"
+          <!-- Réalisation -->
+          <a href="#" class="tile" data-category="realisation"
              data-title="Comptine"
               data-description="Petite comptine décapitante d'une élève de CP un peu différente.
               Film de 1ère année de l'Emca, 2005
@@ -790,16 +723,14 @@ $('#projects').addEventListener('click', (e)=>{
   if (list.length) list.forEach(addImg);
 
   if (video) {
-  const vid = document.createElement('video');
-vid.src = video;
-vid.controls = true;
-vid.playsInline = true;
-vid.preload = 'metadata'; // ← important : ne télécharge pas toute la vidéo
-vid.style.width = '100%';
-vid.style.marginTop = '24px';
-vid.style.gridColumn = `span ${isNaN(cols)?1:cols}`;
-gallery.appendChild(vid);
-
+    const vid = document.createElement('video');
+    vid.src = video;
+    vid.controls = true;
+    vid.playsInline = true;
+    vid.style.width = '100%';
+    vid.style.marginTop = '24px';
+    vid.style.gridColumn = `span ${isNaN(cols)?1:cols}`;
+    gallery.appendChild(vid);
   }
 
   dialog.showModal();
@@ -821,12 +752,6 @@ if (bioBtn && bioDialog) {
   bioDialog.addEventListener('click', e=>{ if (e.target===bioDialog) bioDialog.close(); });
   window.addEventListener('keydown', e=>{ if (e.key==='Escape' && bioDialog.open) bioDialog.close(); });
 }
-/* Optim : n'active pas le téléchargement agressif des images de hover */
-document.querySelectorAll('.img-preview').forEach(img=>{
-  img.setAttribute('loading','lazy');
-  img.setAttribute('decoding','async');
-  img.setAttribute('fetchpriority','low'); // moins prioritaire que les vignettes principales
-});
 
 /* Lazy/async sur les vignettes sous la 1ère ligne */
 (function(){
